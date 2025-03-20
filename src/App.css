@@ -1,27 +1,47 @@
+/* basic styling for layout */
 body {
   font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
 }
 
+/* form styling */
 form {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: center;
+  width: 300px;
+}
+
+label {
+  font-weight: bold;
 }
 
 input {
+  width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
 }
 
 button {
-  padding: 10px 20px;
-  background-color: #007bff;
+  background: #007bff;
   color: white;
+  padding: 10px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  border-radius: 4px;
 }
+
+button:hover {
+  background: #0056b3;
+}
+

@@ -1,46 +1,62 @@
-import { useState } from "react";
+//import useState to store form data
+import { useState } from "react"; 
 
-export default function SignUpForm({ setToken }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+//SignUpForm component that handles user signup
+export default function SignUpForm({ setToken, setUser }) {
+  //state for storing input values and error messages
+  //stores username input
+  const [username, setUsername] = useState(""); 
+  //stores password input
+  const [password, setPassword] = useState(""); 
+  //stores error messages if validation fails
+  const [error, setError] = useState(null); 
 
+  //function to handle form submission
   async function handleSubmit(event) {
-    //prevents page refresh
+    //prevents page refresh when form is submitted
     event.preventDefault(); 
 
-    //client-side validation
+    //basic form validation to check if username & password meet length requirements
     if (username.length < 8) {
-      setError("Username must be at least 8 characters.");
-      return;
+      //sets error message
+      setError("Username must be at least 8 characters."); 
+      //stops function execution
+      return; 
     }
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
+      //sets error message
+      setError("Password must be at least 6 characters."); 
+      //stops function execution
+      return; 
     }
 
     try {
-      const response = await fetch(
-        "https://fsa-jwt-practice.herokuapp.com/signup",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        }
-      );
-      const result = await response.json();
+      //sends user data to signup API
+      const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", {
+        method: "POST", //HTTP request method
+        //sends JSON data
+        headers: { "Content-Type": "application/json" }, 
+        //converts state to JSON format
+        body: JSON.stringify({ username, password }), 
+      });
 
+      //parses API response
+      const result = await response.json(); 
       if (result.token) {
-        //store token in App.jsx state
+        //saves the token in state (passed from App.jsx)
         setToken(result.token); 
-        //clear error on success
+        //saves the username in state (passed from App.jsx)
+        setUser(username); 
+        //clears error messages if signup is successful
         setError(null); 
+        //logs signup details
+        console.log("User signed up:", username, "Token:", result.token); 
       } else {
-        //API error handling
+        //if API returns an error, display it
         throw new Error(result.message); 
       }
     } catch (error) {
-      //store error message in state
+      //stores API error in state to show in UI
       setError(error.message); 
     }
   }
@@ -48,15 +64,17 @@ export default function SignUpForm({ setToken }) {
   return (
     <>
       <h2>Sign Up</h2>
-      
-      {/* show error message if it exists */}
+
+      {/* shows error message if an error exists */}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <label>
           Username:
           <input 
+          //binds input to state
             value={username} 
+            //updates state when user types
             onChange={(e) => setUsername(e.target.value)} 
             required
           />
@@ -65,13 +83,16 @@ export default function SignUpForm({ setToken }) {
           Password:
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            //binds input to state
+            value={password} 
+            //updates state when user types
+            onChange={(e) => setPassword(e.target.value)} 
             required
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit">Submit</button> {/* triggers handleSubmit function */}
       </form>
     </>
   );
 }
+
