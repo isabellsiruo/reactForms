@@ -8,8 +8,8 @@ import Authenticate from "./components/Authenticate.jsx";
 //main App component that manages token and username
 export default function App() {
   //stores token from API
-  const [token, setToken] = useState(null);
-  //stores username from signup 
+  const [token, setToken] = useState(null); 
+  //stores username from signup
   const [user, setUser] = useState(null); 
 
   return (

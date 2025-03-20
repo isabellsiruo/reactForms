@@ -1,10 +1,10 @@
 //import useState to store authentication messages
 import { useState } from "react"; 
 
-//authenticate component that verifies the user's token
+//authenticate component that verifies user's token
 export default function Authenticate({ token }) {
-  //stores success message
-  const [message, setMessage] = useState(null); 
+   //stores success message
+  const [message, setMessage] = useState(null);
   //stores error message
   const [error, setError] = useState(null); 
   //stores username from API response
@@ -13,7 +13,7 @@ export default function Authenticate({ token }) {
   //function to handle authentication request
   async function handleClick() {
     try {
-      //sends GET request to authenticate user with their token
+      //sends GET request to authenticate user with token
       const response = await fetch("https://fsa-jwt-practice.herokuapp.com/authenticate", {
       //HTTP request method  
       method: "GET", 
@@ -24,15 +24,15 @@ export default function Authenticate({ token }) {
           Authorization: `Bearer ${token}`, 
         },
       });
-      //parses API response
+//parses API response
       const result = await response.json(); 
-      
+
       //saves success message from API response
       setMessage(result.message); 
       //saves username (if exists)
       setUser(result.data?.username || "Unknown User"); 
-       //logs username in console
-      console.log("Authenticated User:", result.data?.username);
+      //logs username in console
+      console.log("Authenticated User:", result.data?.username); 
     } catch (error) {
       //stores API error in state to show in UI
       setError(error.message); 
@@ -49,4 +49,3 @@ export default function Authenticate({ token }) {
     </div>
   );
 }
-

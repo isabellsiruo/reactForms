@@ -29,11 +29,13 @@ export default function SignUpForm({ setToken, setUser }) {
       //stops function execution
       return; 
     }
+      
 
     try {
       //sends user data to signup API
       const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", {
-        method: "POST", //HTTP request method
+        //HTTP request method
+        method: "POST", 
         //sends JSON data
         headers: { "Content-Type": "application/json" }, 
         //converts state to JSON format
@@ -42,17 +44,18 @@ export default function SignUpForm({ setToken, setUser }) {
 
       //parses API response
       const result = await response.json(); 
+
       if (result.token) {
-        //saves the token in state (passed from App.jsx)
+        //saves token in state (passed from App.jsx)
         setToken(result.token); 
-        //saves the username in state (passed from App.jsx)
+        //saves username in state (passed from App.jsx)
         setUser(username); 
         //clears error messages if signup is successful
         setError(null); 
         //logs signup details
         console.log("User signed up:", username, "Token:", result.token); 
       } else {
-        //if API returns an error, display it
+        //if API returns an error display it
         throw new Error(result.message); 
       }
     } catch (error) {
@@ -65,7 +68,7 @@ export default function SignUpForm({ setToken, setUser }) {
     <>
       <h2>Sign Up</h2>
 
-      {/* shows error message if an error exists */}
+      {/* shows error message if error exists */}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <form onSubmit={handleSubmit}>
